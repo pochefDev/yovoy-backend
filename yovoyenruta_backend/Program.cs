@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using yovoyenruta_backend.Data.DataSets;
+using yovoyenruta_backend.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

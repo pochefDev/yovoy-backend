@@ -45,7 +45,7 @@ namespace yovoyenruta_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace yovoyenruta_backend.Controllers
         }
 
         [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(User user, int userId)
+        public async Task<IActionResult> UpdateUser([FromBody] User user, Guid userId)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace yovoyenruta_backend.Controllers
         }
 
         [HttpDelete("{userId}")]
-        public IActionResult DeleteUser(int userId)
+        public IActionResult DeleteUser(Guid userId)
         {
             try
             {

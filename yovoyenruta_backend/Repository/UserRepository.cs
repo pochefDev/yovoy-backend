@@ -73,13 +73,13 @@ namespace yovoyenruta_backend.Repository
             }
         }
 
-        public async Task<ActionResult<User>> Update(User user, int userId)
+        public async Task<User> Update(User user, Guid userId)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
                 
-                User updateUser = await _context.users.FindAsync(userId);
+                var updateUser = _context.users.FirstOrDefault(user => user.id == userId);
 
                 if (updateUser == null)
                     throw new Exception("No se encontró al usuario especificado");
@@ -93,7 +93,7 @@ namespace yovoyenruta_backend.Repository
                 updateUser.enrollment_date = user.enrollment_date;
 
                 _context.Entry(updateUser).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 await transaction.CommitAsync();
 
                 return updateUser;
@@ -105,19 +105,18 @@ namespace yovoyenruta_backend.Repository
             }
         }
 
-        public async void Delete(int id)
+        public async void Delete(Guid id)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-
-                var user = await _context.users.FindAsync(id);
+                var user = _context.users.FirstOrDefault(user => user.id == id);
 
                 if (user == null)
                     throw new Exception("No se encontró al usuario especificado");
 
                 _context.users.Remove(user);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 await transaction.CommitAsync();
             }
             catch (Exception ex)
