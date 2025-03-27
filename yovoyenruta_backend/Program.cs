@@ -1,23 +1,30 @@
 using Microsoft.EntityFrameworkCore;
+using yovoyenruta_backend.Repository;
+using yovoyenruta_backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configurar DbContext con SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Registrar el UserRepository para la inyección de dependencias
+builder.Services.AddScoped<UserRepository>();
+
 var app = builder.Build();
 
+// Crear base de datos si no existe
 using (var scope = app.Services.CreateScope())
 {
-    ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
 }
 
-// Configure the HTTP request pipeline.
+// Configurar el middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -25,6 +32,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+
+// Mapear controladores (API)
+app.MapControllers();
 
 var summaries = new[]
 {
