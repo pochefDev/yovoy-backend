@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//builder.Services.AddTransient<InitialDataSeeder>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -25,11 +25,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var seeder = scope.ServiceProvider.GetRequiredService<InitialDataSeeder>();
-//    seeder.Seed();
-//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
