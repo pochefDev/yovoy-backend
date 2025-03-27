@@ -19,7 +19,7 @@ public partial class User
     public string? name { get; set; }
 
     [StringLength(255)]
-    [Unicode(false)]
+    [Unicode(true)]
     public string? email { get; set; }
 
     [StringLength(50)]
