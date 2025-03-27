@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using yovoyenruta_backend.Data.DataSets;
 using yovoyenruta_backend.Data.Entities;
 
 public class ApplicationDbContext : DbContext
@@ -47,4 +48,5 @@ public class ApplicationDbContext : DbContext
     public virtual DbSet<VehicleAvailability> vehicle_availabilities { get; set; }
 
     public virtual DbSet<VehicleFeature> vehicle_features { get; set; }
+
 }

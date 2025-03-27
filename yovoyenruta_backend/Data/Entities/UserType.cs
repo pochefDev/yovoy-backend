@@ -11,10 +11,10 @@ public partial class UserType
     [Key]
     public Guid id { get; set; }
 
-    [Column("user_type")]
+    [Column("type")]
     [StringLength(50)]
     [Unicode(false)]
-    public string? user_type1 { get; set; }
+    public string? type { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]

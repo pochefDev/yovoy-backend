@@ -37,6 +37,10 @@ public partial class Vehicle
 
     public bool? is_active { get; set; }
 
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? brand { get; set; }
+
     [InverseProperty("vehicle")]
     public virtual ICollection<AssignmentLog> assignment_logs { get; set; } = new List<AssignmentLog>();
 
