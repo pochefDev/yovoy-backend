@@ -1,0 +1,14 @@
+# Archivos de configuración sensibles
+appsettings_example.json
+
+# Otros archivos comunes a ignorar
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.cache
+*.swp
+*.sw?
+*.DS_Store

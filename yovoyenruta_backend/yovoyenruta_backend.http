@@ -1,0 +1,6 @@
+@yovoyenruta_backend_HostAddress = http://localhost:5288
+
+GET {{yovoyenruta_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
