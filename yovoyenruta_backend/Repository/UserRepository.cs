@@ -47,6 +47,9 @@ namespace yovoyenruta_backend.Repository
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
+                var existingUser = _context.users.Any(x => x.email == user.email);
+                if (existingUser)
+                    throw new Exception("El email proporcionado ya existe");
 
                 User newUser = new User()
                 {
@@ -55,7 +58,8 @@ namespace yovoyenruta_backend.Repository
                     name = user.name,
                     email = user.email,
                     phone = user.phone,
-                    password_hash = user.password_hash,
+                    role = user.role,
+                    password_hash = BCrypt.Net.BCrypt.HashPassword(user.password_hash),
                     is_active = true,
                     enrollment_date = user.enrollment_date,
                     creation_date = DateTime.Now,
