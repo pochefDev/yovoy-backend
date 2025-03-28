@@ -31,8 +31,6 @@ public partial class Operator
 
     public double? salary { get; set; }
 
-    public bool? is_active { get; set; }
-
     [InverseProperty("_operator")]
     public virtual ICollection<AssignmentLog> assignment_logs { get; set; } = new List<AssignmentLog>();
 
