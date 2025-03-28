@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 using yovoyenruta_backend.Data.Entities;
@@ -13,14 +14,6 @@ namespace yovoyenruta_backend.Repository
         public OperatorRepository(ApplicationDbContext context)
         {
             _context= context;
-        }
-
-        public class DriverCardInfo()
-        {
-            public Operator DriverInfo { get; set; }
-            public User UserInfo { get; set; }
-
-            public Shift ShiftInfo { get; set; }
         }
 
         public async Task<ActionResult<List<Operator>>> GetOperators()
@@ -138,5 +131,52 @@ namespace yovoyenruta_backend.Repository
             }
         }
 
+        public async Task<ActionResult<OperatorInformation>> GetOperatorGeneralInfo(Guid operatorUUID)
+        {
+            try
+            {
+                var operatorExists = await _context.operators.AnyAsync(o => o.id == operatorUUID);
+                if (!operatorExists)
+                    throw new Exception("No se encontró al operador especificado");
+
+                var parameters = new[]
+                {
+            new SqlParameter("@OperatorUUID", operatorUUID)
+        };
+
+                var resultList = await _context.OperatorInformation // ✅ Usa DbSet<OperatorInformation>
+                    .FromSqlRaw("EXEC ObtenerInformacionGeneral @OperatorUUID", parameters)
+                    .AsNoTracking()
+                    .ToListAsync();
+
+                var result = resultList.FirstOrDefault();
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
     }
+
+    public class DriverCardInfo()
+    {
+        public Operator DriverInfo { get; set; }
+        public User UserInfo { get; set; }
+
+        public Shift ShiftInfo { get; set; }
+    }
+
+    public class OperatorInformation
+    {
+        public double? Rating { get; set; }  // Puede ser NULL en SQL
+        public int RoutesNumber { get; set; }
+        public int YearExperiences { get; set; }
+        public decimal AttendancePercentage { get; set; }
+    }
+
 }

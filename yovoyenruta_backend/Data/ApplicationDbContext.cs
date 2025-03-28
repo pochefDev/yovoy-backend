@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using yovoyenruta_backend.Data.DataSets;
 using yovoyenruta_backend.Data.Entities;
+using yovoyenruta_backend.Repository;
 
 public class ApplicationDbContext : DbContext
 {
@@ -49,4 +50,10 @@ public class ApplicationDbContext : DbContext
 
     public virtual DbSet<VehicleFeature> vehicle_features { get; set; }
 
+    public virtual DbSet<OperatorInformation> OperatorInformation { get; set; } // ✅ Agregado aquí
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<OperatorInformation>().HasNoKey(); // ✅ Asegurar que no tiene clave
+    }
 }
