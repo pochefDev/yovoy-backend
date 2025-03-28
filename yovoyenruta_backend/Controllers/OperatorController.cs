@@ -34,6 +34,7 @@ namespace yovoyenruta_backend.Controllers
             try
             {
                 var bus_driver = repository.Show(id);
+
                 return Ok(bus_driver);
             }
             catch (Exception ex)
