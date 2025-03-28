@@ -4,39 +4,38 @@ using yovoyenruta_backend.Repository;
 
 namespace yovoyenruta_backend.Controllers
 {
-    [Route("api/users")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    [Route("api/operators")]
+    public class OperatorController : ControllerBase
     {
-        private readonly UserRepository repository;
+        private readonly OperatorRepository repository;
 
-        public UsersController(UserRepository repository)
+        public OperatorController(OperatorRepository repository)
         {
             this.repository = repository;
         }
 
-        
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetOperators()
         {
             try
             {
-                var users = await repository.GetUsers();
-                return Ok(users);
+                var operatos = await repository.GetOperators();
+                return Ok(operatos);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return UnprocessableEntity(new { message = ex.Message });
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUser(Guid id)
+        public IActionResult GetOperator(Guid id)
         {
             try
             {
-                var user = repository.Show(id);
-                return Ok(user);
+                var bus_driver = repository.Show(id);
+
+                return Ok(bus_driver);
             }
             catch (Exception ex)
             {
@@ -45,12 +44,12 @@ namespace yovoyenruta_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateOperator(Operator bus_driver)
         {
             try
             {
-                var newUser = await repository.Create(user);
-                return Created("api/users", newUser);
+                var newBusDriver = await repository.Create(bus_driver);
+                return Created("api/operators", newBusDriver);
             }
             catch (Exception ex)
             {
@@ -58,13 +57,13 @@ namespace yovoyenruta_backend.Controllers
             }
         }
 
-        [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(User user, Guid userId)
+        [HttpPut("{operetorId}")]
+        public async Task<IActionResult> UpdateOperator(Operator bus_driver, Guid operetorId)
         {
             try
             {
-                var newUser = await repository.Update(user, userId);
-                return Ok(newUser);
+                var newBusDriver = await repository.Update(bus_driver, operetorId);
+                return Ok(newBusDriver);
             }
             catch (Exception ex)
             {
@@ -72,12 +71,12 @@ namespace yovoyenruta_backend.Controllers
             }
         }
 
-        [HttpDelete("{userId}")]
-        public IActionResult DeleteUser(Guid userId)
+        [HttpDelete("{operetorId}")]
+        public IActionResult DeleteOperator(Guid operetorId)
         {
             try
             {
-                repository.Delete(userId);
+                repository.Delete(operetorId);
                 return NoContent();
             }
             catch (Exception ex)
@@ -85,5 +84,7 @@ namespace yovoyenruta_backend.Controllers
                 return UnprocessableEntity(new { message = ex.Message });
             }
         }
+
+
     }
 }
