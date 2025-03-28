@@ -50,6 +50,7 @@ namespace yovoyenruta_backend.Repository
 
                 User newUser = new User()
                 {
+                    id = Guid.NewGuid(),
                     user_type_id = user.user_type_id,
                     name = user.name,
                     email = user.email,
