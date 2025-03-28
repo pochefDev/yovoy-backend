@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<OperatorRepository>();
+builder.Services.AddScoped<RatingsRepository>();
 
 var app = builder.Build();
 
