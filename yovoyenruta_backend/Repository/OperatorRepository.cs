@@ -144,7 +144,7 @@ namespace yovoyenruta_backend.Repository
             new SqlParameter("@OperatorUUID", operatorUUID)
         };
 
-                var resultList = await _context.OperatorInformation // ✅ Usa DbSet<OperatorInformation>
+                var resultList = await _context.OperatorInformation
                     .FromSqlRaw("EXEC ObtenerInformacionGeneral @OperatorUUID", parameters)
                     .AsNoTracking()
                     .ToListAsync();

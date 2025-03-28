@@ -12,28 +12,29 @@ public partial class User
     [Key]
     public Guid id { get; set; }
 
-    public Guid? user_type_id { get; set; }
+    public Guid user_type_id { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
-    public string? name { get; set; }
+    public string name { get; set; }
 
     [StringLength(255)]
     [Unicode(true)]
-    public string? email { get; set; }
+    public string email { get; set; }
 
     [StringLength(50)]
     [Unicode(false)]
     public string? phone { get; set; }
 
-    [Column(TypeName = "text")]
-    public string? password_hash { get; set; }
+    [StringLength(255)]
+    [Unicode(true)]
+    public string password_hash { get; set; }
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? role { get; set; }
+    public string role { get; set; }
 
-    public bool? is_active { get; set; }
+    public bool is_active { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? creation_date { get; set; }
