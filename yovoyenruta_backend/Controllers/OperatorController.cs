@@ -85,6 +85,20 @@ namespace yovoyenruta_backend.Controllers
             }
         }
 
+        [HttpGet("{operatorId}/general-info")]
+        public async Task<ActionResult<OperatorInformation>> GetOperatorGeneralInfo(Guid operatorId)
+        {
+            try
+            {
+                var info = await repository.GetOperatorGeneralInfo(operatorId);
+                return Ok(info);
+            }
+            catch (Exception ex)
+            {
+                return UnprocessableEntity(new { message = ex.Message });
+            }
+        }
+
 
     }
 }
