@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 using yovoyenruta_backend.Data.Entities;
 
 namespace yovoyenruta_backend.Repository
@@ -12,6 +13,14 @@ namespace yovoyenruta_backend.Repository
         public OperatorRepository(ApplicationDbContext context)
         {
             _context= context;
+        }
+
+        public class DriverCardInfo()
+        {
+            public Operator DriverInfo { get; set; }
+            public User UserInfo { get; set; }
+
+            public Shift ShiftInfo { get; set; }
         }
 
         public async Task<ActionResult<List<Operator>>> GetOperators()
@@ -26,7 +35,7 @@ namespace yovoyenruta_backend.Repository
             }
         }
 
-        public Operator Show(Guid id)
+        public ActionResult<DriverCardInfo> Show(Guid id)
         {
             try
             {
@@ -34,8 +43,15 @@ namespace yovoyenruta_backend.Repository
 
                 if (bus_driver == null)
                     throw new Exception("No se encontró al usuario especificado");
-                
-                return bus_driver;
+
+                var result = new DriverCardInfo
+                {
+                       DriverInfo = bus_driver,
+                       UserInfo = _context.users.Find(bus_driver.user_id),
+                       ShiftInfo = _context.shifts.Find(bus_driver.shift_id)
+                };
+
+                return result;
 
             }
             catch (Exception ex)
