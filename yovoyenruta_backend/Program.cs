@@ -14,7 +14,19 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<OperatorRepository>();
 builder.Services.AddScoped<RatingsRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("MyCorsPolicy");
 
 using (var scope = app.Services.CreateScope())
 {
