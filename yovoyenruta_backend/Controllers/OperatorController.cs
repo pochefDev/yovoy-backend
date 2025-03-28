@@ -49,7 +49,7 @@ namespace yovoyenruta_backend.Controllers
             try
             {
                 var newBusDriver = await repository.Create(bus_driver);
-                return Created("api/users", newBusDriver);
+                return Created("api/operators", newBusDriver);
             }
             catch (Exception ex)
             {
