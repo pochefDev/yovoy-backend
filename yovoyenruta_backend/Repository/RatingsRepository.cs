@@ -26,6 +26,18 @@ namespace yovoyenruta_backend.Repository
             }
         }
 
+        public async Task<ActionResult<List<Rating>>> GetRatingsByOperator(Guid idOperator)
+        {
+            try
+            {
+                return await _context.ratings.Where(x => x.operator_id == idOperator).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public Rating Show(Guid id)
         {
             try

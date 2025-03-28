@@ -28,6 +28,20 @@ namespace yovoyenruta_backend.Controllers
             }
         }
 
+        [HttpGet("{idOperator}/operator")]
+        public async Task<IActionResult> GetRatingsByOperator(Guid idOperator)
+        {
+            try
+            {
+                var rating = await repository.GetRatingsByOperator(idOperator);
+                return Ok(rating);
+            }
+            catch (Exception ex)
+            {
+                return UnprocessableEntity(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetRating(Guid id)
         {
