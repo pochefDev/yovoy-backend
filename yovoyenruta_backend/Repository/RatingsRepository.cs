@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static yovoyenruta_backend.Repository.OperatorRepository;
 using yovoyenruta_backend.Data.Entities;
 
 namespace yovoyenruta_backend.Repository
@@ -72,7 +71,7 @@ namespace yovoyenruta_backend.Repository
                 };
 
                 _context.ratings.Add(newRating);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 await transaction.CommitAsync();
 
                 return newRating;
