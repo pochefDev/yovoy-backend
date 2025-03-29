@@ -58,11 +58,11 @@ namespace yovoyenruta_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRating(Rating rating)
+        public IActionResult CreateRating([FromBody] Rating rating)
         {
             try
             {
-                var newRating = await repository.Create(rating);
+                var newRating = repository.Create(rating);
                 return Created("api/ratings", newRating);
             }
             catch (Exception ex)
